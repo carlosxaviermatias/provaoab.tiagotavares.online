@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OAB Estudos - Questões de Provas Anteriores</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <div class="logo" onclick="navegar('home')">
+        <span class="logo-icon">&#9878;</span>
+        <h1>OAB Estudos</h1>
+      </div>
+      <nav>
+        <button class="nav-btn ativo" data-pagina="home" onclick="navegar('home')">Início</button>
+        <button class="nav-btn" data-pagina="questoes" onclick="navegar('questoes')">Questões</button>
+        <button class="nav-btn" data-pagina="estatisticas" onclick="navegar('estatisticas')">Estatísticas</button>
+        <button class="nav-btn" data-pagina="comentarios" onclick="navegar('comentarios')">Comentários</button>
+        <button class="nav-btn" data-pagina="download" onclick="navegar('download')">Download</button>
+      </nav>
+      <div class="cronometro-badge" title="Tempo de estudo">
+        <span class="cronometro-icon">&#9201;</span>
+        <span id="cronometro">00:00:00</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- HOME -->
+      <section id="pagina-home" class="pagina ativa">
+        <div class="hero">
+          <h2>Prepare-se para a OAB</h2>
+          <p>Estude com questões reais de exames anteriores, com gabarito comentado e acompanhe seu progresso.</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-num" id="stat-total">0</div>
+            <div class="stat-label">Questões no Banco</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="stat-respondidas">0</div>
+            <div class="stat-label">Questões Respondidas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="stat-acertos">0</div>
+            <div class="stat-label">Acertos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="stat-aproveitamento">0%</div>
+            <div class="stat-label">Aproveitamento</div>
+          </div>
+        </div>
+
+        <div class="disciplinas-grid">
+          <h3>Disciplinas Disponíveis</h3>
+          <div id="disciplinas-lista" class="disciplinas-cards"></div>
+        </div>
+
+        <div class="acoes-rapidas">
+          <h3>Ações Rápidas</h3>
+          <div class="acoes-grid">
+            <button class="acao-card" onclick="navegar('questoes')">
+              <span class="acao-icon">&#9997;</span>
+              <span>Responder Questões</span>
+            </button>
+            <button class="acao-card" onclick="filtrarPorNaoRespondidas()">
+              <span class="acao-icon">&#9654;</span>
+              <span>Não Respondidas</span>
+            </button>
+            <button class="acao-card" onclick="filtrarPorErradas()">
+              <span class="acao-icon">&#10007;</span>
+              <span>Revisar Erros</span>
+            </button>
+            <button class="acao-card" onclick="navegar('download')">
+              <span class="acao-icon">&#11015;</span>
+              <span>Baixar Provas</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUESTOES -->
+      <section id="pagina-questoes" class="pagina">
+        <div class="page-header">
+          <h2>Banco de Questões</h2>
+          <div class="filtros">
+            <select id="filtro-disciplina" onchange="aplicarFiltros()">
+              <option value="">Todas as Disciplinas</option>
+            </select>
+            <select id="filtro-exame" onchange="aplicarFiltros()">
+              <option value="">Todos os Exames</option>
+            </select>
+            <select id="filtro-ano" onchange="aplicarFiltros()">
+              <option value="">Todos os Anos</option>
+            </select>
+            <select id="filtro-status" onchange="aplicarFiltros()">
+              <option value="">Todos os Status</option>
+              <option value="nao-respondida">Não Respondida</option>
+              <option value="correta">Acertadas</option>
+              <option value="errada">Erradas</option>
+              <option value="nao-acertadas">Não Acertadas</option>
+            </select>
+            <button class="btn-secondary" onclick="iniciarModoProva()">Modo Prova</button>
+          </div>
+        </div>
+
+        <div id="questoes-container" class="questoes-lista"></div>
+
+        <div id="paginacao" class="paginacao"></div>
+      </section>
+
+      <!-- ESTATISTICAS -->
+      <section id="pagina-estatisticas" class="pagina">
+        <div class="page-header">
+          <h2>Estatísticas</h2>
+          <p class="subtitulo">Seu aproveitamento e tempo de estudo, geral e por disciplina.</p>
+        </div>
+
+        <div class="stats-grid" id="estat-geral-cards"></div>
+
+        <div class="grafico-secao">
+          <h3>Aproveitamento por Disciplina</h3>
+          <div id="grafico-disciplinas" class="grafico-barras"></div>
+        </div>
+      </section>
+
+      <!-- COMENTARIOS -->
+      <section id="pagina-comentarios" class="pagina">
+        <div class="page-header">
+          <h2>Meus Comentários</h2>
+          <p class="subtitulo">Todos os seus comentários e anotações em um só lugar.</p>
+        </div>
+        <div id="comentarios-container"></div>
+      </section>
+
+      <!-- DOWNLOAD -->
+      <section id="pagina-download" class="pagina">
+        <div class="page-header">
+          <h2>Download de Provas</h2>
+          <p class="subtitulo">Baixe as provas oficiais em PDF diretamente do site da OAB, com gabaritos.</p>
+        </div>
+        <div class="download-grid" id="download-lista"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>OAB Estudos &mdash; Material de apoio para estudos da OAB. Questões baseadas em exames reais (Exames XXVIII a XLI) com links oficiais para PDFs da OAB.</p>
+    </div>
+  </footer>
+
+  <script src="js/dados.js"></script>
+  <script src="js/comentarios.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
