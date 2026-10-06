@@ -20,6 +20,7 @@
         <button class="nav-btn" data-pagina="comentarios" onclick="navegar('comentarios')">Comentários</button>
         <button class="nav-btn" data-pagina="download" onclick="navegar('download')">Download</button>
         <button class="nav-btn" data-pagina="ps" onclick="navegar('ps')">Processo Seletivo</button>
+        <button class="nav-btn" data-pagina="sebrae" onclick="navegar('sebrae')">SEBRAE</button>
       </nav>
       <div class="cronometro-badge" title="Tempo de estudo">
         <span class="cronometro-icon">&#9201;</span>
@@ -194,6 +195,57 @@
           <ul class="ps-links" id="ps-links"></ul>
         </div>
       </section>
+
+      <!-- PROCESSO SELETIVO SEBRAE/RJ - ALI 02/2026 -->
+      <section id="pagina-sebrae" class="pagina">
+        <div class="page-header">
+          <h2>Processo Seletivo SEBRAE/RJ &mdash; ALI 02/2026</h2>
+          <p class="subtitulo">Agente Local de Inova&ccedil;&atilde;o &middot; metodologia Educa&ccedil;&atilde;o Empreendedora &middot; prova objetiva de 50 quest&otilde;es e entrevista por compet&ecirc;ncias.</p>
+        </div>
+
+        <div class="ps-tabs sb-tabs">
+          <button class="sb-tab-btn ativo" data-aba="geral" onclick="sbAba('geral')">Vis&atilde;o geral</button>
+          <button class="sb-tab-btn" data-aba="resumo" onclick="sbAba('resumo')">Resumo da mat&eacute;ria</button>
+          <button class="sb-tab-btn" data-aba="questoes" onclick="sbAba('questoes')">Quest&otilde;es</button>
+          <button class="sb-tab-btn" data-aba="entrevista" onclick="sbAba('entrevista')">Entrevista</button>
+        </div>
+
+        <div id="sb-aba-geral" class="sb-aba ativa">
+          <div id="sb-geral"></div>
+          <h3 class="ps-titulo">Links oficiais</h3>
+          <ul class="ps-links" id="sb-links"></ul>
+        </div>
+
+        <div id="sb-aba-resumo" class="sb-aba">
+          <p class="ps-obs">O que a banca mais cobra, com o essencial em destaque. Leia uma vez por eixo e depois resolva as quest&otilde;es daquele bloco.</p>
+          <div id="sb-resumo-chips" class="chips"></div>
+          <div id="sb-resumo"></div>
+        </div>
+
+        <div id="sb-aba-questoes" class="sb-aba">
+          <div id="sb-chips" class="chips"></div>
+          <div class="filtros ps-filtros">
+            <select id="sb-filtro-status" onchange="SB.carregarQuestoes()">
+              <option value="">Todos os status</option>
+              <option value="nao-respondida">N&atilde;o respondidas</option>
+              <option value="correta">Acertadas</option>
+              <option value="errada">Erradas</option>
+            </select>
+            <button class="btn-secondary" onclick="SB.refazer()">Refazer do zero</button>
+            <span id="sb-contador" class="ps-contador"></span>
+          </div>
+          <div id="sb-questoes" class="questoes-lista"></div>
+          <div id="sb-paginacao" class="paginacao"></div>
+        </div>
+
+        <div id="sb-aba-entrevista" class="sb-aba">
+          <p class="ps-obs">Entrevista de 45 minutos, gravada, com banca da FAPETEC e do SEBRAE/RJ. Vale 100 pontos e elimina quem fica abaixo de 50. Responda em voz alta, cronometrando 2 minutos, antes de abrir o roteiro.</p>
+          <div id="sb-entrevista-guia"></div>
+          <h3 class="ps-titulo">Perguntas prov&aacute;veis por compet&ecirc;ncia</h3>
+          <div id="sb-entrevista-chips" class="chips"></div>
+          <div id="sb-entrevista"></div>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -208,6 +260,8 @@
   <script src="js/timer.js"></script>
   <script src="js/ps_dados.js"></script>
   <script src="js/ps.js"></script>
+  <script src="js/sebrae_dados.js"></script>
+  <script src="js/sebrae.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

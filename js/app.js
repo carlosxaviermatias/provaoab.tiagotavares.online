@@ -77,6 +77,7 @@ const App = {
     if (pagina === 'comentarios') this.carregarComentarios();
     if (pagina === 'download') this.carregarDownloads();
     if (pagina === 'ps') PS.abrir();
+    if (pagina === 'sebrae') SB.abrir();
 
     if (pagina !== 'questoes') Timer.setDisciplinaAtiva(null);
 
