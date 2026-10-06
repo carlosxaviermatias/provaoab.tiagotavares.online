@@ -5,6 +5,8 @@ const PS = {
   ITENS_POR_PAGINA: 10,
   ENTREVISTA_DATA: new Date(2026, 10, 5, 0, 0, 0), // 05/11/2026 (mês 10 = novembro)
   aba: 'geral',
+  materiaAtiva: '',
+  materiaEntrevista: '',
   paginaAtual: 1,
   filtradas: [],
 
@@ -29,13 +31,6 @@ const PS = {
 
   montar() {
     this.pronto = true;
-    const selMat = document.getElementById('ps-filtro-materia');
-    PS_MATERIAS.forEach(m => {
-      const opt = document.createElement('option');
-      opt.value = m;
-      opt.textContent = `${m} (${questoesPS.filter(q => q.materia === m).length})`;
-      selMat.appendChild(opt);
-    });
     this.montarLinksProvas();
   },
 
@@ -131,19 +126,37 @@ const PS = {
 
   estudarMateria(materia) {
     this.mostrarAba('questoes');
-    document.getElementById('ps-filtro-materia').value = materia;
-    this.carregarQuestoes();
+    this.escolherMateria(materia);
   },
 
   // ---------- Questões ----------
+  escolherMateria(materia) {
+    this.materiaAtiva = materia;
+    this.carregarQuestoes();
+  },
+
+  // Botões de matéria, com o progresso (respondidas/total) de cada uma.
+  renderChips() {
+    const r = this.getRespostas();
+    const chip = (valor, nome, resp, total) =>
+      `<button class="chip ${this.materiaAtiva === valor ? 'ativo' : ''}" data-valor="${this.esc(valor)}" onclick="PS.escolherMateria(this.dataset.valor)">${this.esc(nome)} <span>${resp}/${total}</span></button>`;
+    const todas = questoesPS.filter(q => r[q.id] !== undefined).length;
+    document.getElementById('ps-chips').innerHTML = chip('', 'Todas', todas, questoesPS.length) +
+      PS_MATERIAS.map(m => {
+        const qs = questoesPS.filter(q => q.materia === m);
+        return chip(m, m, qs.filter(q => r[q.id] !== undefined).length, qs.length);
+      }).join('');
+  },
+
   carregarQuestoes() {
     this.filtradas = this.filtrar();
+    this.renderChips();
     this.paginaAtual = 1;
     this.renderQuestoes();
   },
 
   filtrar() {
-    const mat = document.getElementById('ps-filtro-materia').value;
+    const mat = this.materiaAtiva;
     const status = document.getElementById('ps-filtro-status').value;
     const r = this.getRespostas();
     return questoesPS.filter(q => {
@@ -169,7 +182,13 @@ const PS = {
 
     const ini = (this.paginaAtual - 1) * this.ITENS_POR_PAGINA;
     const lote = this.filtradas.slice(ini, ini + this.ITENS_POR_PAGINA);
-    container.innerHTML = lote.map(q => this.htmlQuestao(q)).join('');
+    let anterior = null;
+    container.innerHTML = lote.map(q => {
+      const titulo = q.materia !== anterior
+        ? `<h3 class="ps-secao">${this.esc(q.materia)} <span>${questoesPS.filter(x => x.materia === q.materia).length} questões</span></h3>` : '';
+      anterior = q.materia;
+      return titulo + this.htmlQuestao(q);
+    }).join('');
     const r = this.getRespostas();
     lote.forEach(q => { if (r[q.id] !== undefined) this.exibirGabarito(q, r[q.id]); });
 
@@ -205,6 +224,7 @@ const PS = {
     if (!q) return;
     this.setResposta(id, idx);
     this.exibirGabarito(q, idx);
+    this.renderChips();
   },
 
   exibirGabarito(q, idx) {
@@ -246,11 +266,19 @@ const PS = {
   },
 
   // ---------- Entrevista ----------
+  escolherMateriaEntrevista(materia) {
+    this.materiaEntrevista = materia;
+    this.renderEntrevista();
+  },
+
   renderEntrevista() {
     const container = document.getElementById('ps-entrevista');
-    if (container.dataset.pronto) return;
-    container.dataset.pronto = '1';
-    container.innerHTML = entrevistaPS.map((e, i) => `
+    const materias = [...new Set(entrevistaPS.map(e => e.materia))];
+    const chip = (valor, nome, qtd) =>
+      `<button class="chip ${this.materiaEntrevista === valor ? 'ativo' : ''}" data-valor="${this.esc(valor)}" onclick="PS.escolherMateriaEntrevista(this.dataset.valor)">${this.esc(nome)} <span>${qtd}</span></button>`;
+    document.getElementById('ps-entrevista-chips').innerHTML = chip('', 'Todas', entrevistaPS.length) +
+      materias.map(m => chip(m, m, entrevistaPS.filter(e => e.materia === m).length)).join('');
+    container.innerHTML = entrevistaPS.map((e, i) => [e, i]).filter(([e]) => !this.materiaEntrevista || e.materia === this.materiaEntrevista).map(([e, i]) => `
       <details class="ps-entrevista-item">
         <summary>
           <span class="ps-num">${i + 1}</span>

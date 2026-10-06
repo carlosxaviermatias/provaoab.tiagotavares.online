@@ -904,3 +904,58 @@ footer {
   .ps-entrevista-item summary { flex-wrap: wrap; }
   .ps-tabela th { width: 38%; }
 }
+
+/* ===== Botões de matéria (divisão por disciplina) ===== */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.chip {
+  background: var(--card-bg);
+  color: var(--primary-dark);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.chip span {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: #eaf1f8;
+  color: var(--primary);
+  font-size: 12px;
+}
+
+.chip:hover { border-color: var(--primary-light); }
+
+.chip.ativo {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.chip.ativo span { background: rgba(255,255,255,0.22); color: #fff; }
+
+.ps-secao {
+  margin: 22px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary-dark);
+  font-size: 18px;
+}
+
+.ps-secao span {
+  margin-left: 8px;
+  color: var(--text-light);
+  font-size: 13px;
+  font-weight: 500;
+}
