@@ -350,7 +350,7 @@ const App = {
     } else {
       gabarito.innerHTML = `
         <div class="resposta">
-          &#128221; Questão registrada. O gabarito oficial ainda não foi associado.
+          &#128221; Questão anulada pela banca: não há alternativa correta oficial.
         </div>
         <div class="explicacao"><strong>Comentário:</strong> ${q.comentario}</div>
       `;

@@ -52,7 +52,8 @@ oab-estudos/
 | 42º   | 2024| 541-620 | 80 | ✅ Extraído e conferido |
 | 45º   | 2025| 621-700 | 80 | ✅ Extraído e conferido |
 | 46º   | 2026| 701-780 | 80 | ✅ Extraído e conferido |
-| **Total** | | 1-780 (com furos) | **640** | |
+| 47º   | 2026| 781-860 | 80 | ✅ Extraído e conferido (06/09/2026; 1 anulada: nº 47) |
+| **Total** | | 1-860 (com furos) | **720** | |
 
 Os IDs não são mais "posição no calendário de exames" — cada bloco de 80 é só
 uma faixa livre atribuída na ordem em que os exames foram processados. 42º e
@@ -173,7 +174,7 @@ ar (DNS não resolve mais) — foram corrigidos em 2026-07-10 para o CDN atual
 | 44º | 17000 |
 | 45º | 17431 |
 | 46º | 17734 |
-| 47º | 18197 (ainda não extraído, exame mais recente) |
+| 47º | 18197 (extraído em 05/10/2026, ver abaixo) |
 
 ## Seção "Processo Seletivo" (estágio na Vara Federal de Três Rios — Edital SJRJ 47/2026)
 
@@ -191,6 +192,17 @@ Aba separada do banco da OAB (menu "Processo Seletivo"). A seleção do edital �
   originais ficam só como links na aba "Provas antigas".
 - Para acrescentar questão: novo objeto em `questoesPS` (4 alternativas, `correta` = índice 0-3, `comentario`).
 - ⚠️ O conteúdo cita lei e súmulas — conferir a legislação atualizada se algo mudar (ex.: EC 103/2019, Lei 13.846/2019).
+
+### 47º Exame (05/10/2026)
+
+Fonte: PDFs da FGV (`oab.fgv.br/arq/650/...`): provas Tipos 1 a 4 + gabarito definitivo (o gabarito é **por tipo**; o site usa o
+**Tipo 1 – Branca**). Cópias em `provas/47_tipo 1.pdf` e `provas/47_tipo_gabarito.pdf`; os links de download apontam para a FGV.
+- Extração com PyMuPDF (mesmo pipeline dos demais; fronteiras 1→80, marcadores `(A)`..`(D)`), correção de 2 hífens quebrados na extração.
+- **Validação do gabarito**: as 80 respostas do Tipo 1 foram conferidas contra os Tipos 2, 3 e 4 usando a *tabela de correspondência* do
+  PDF (0 divergências) e o texto de cada questão foi comparado entre os 4 tipos (0 divergências). A anulada é a nº 47 do Tipo 1
+  (duplicata; nº 48/49/50 nos Tipos 2/3/4) → `correta: null`.
+- Disciplinas atribuídas à mão, por conteúdo (blocos da FGV: Ética 1-8, Filosofia 9-10, Constitucional 11-16, … Trabalho 71-75,
+  Proc. do Trabalho 76-80). Não há comentários nas questões do 47º ainda.
 
 ## Pendências / Problemas Conhecidos
 
@@ -211,7 +223,6 @@ Aba separada do banco da OAB (menu "Processo Seletivo"). A seleção do edital �
 - **Disciplina não identificada em ~69 das 640 questões** (aparecem como "Sem Classificação"
   no site) — o classificador por palavras-chave (`classificador.py`) não achou termos fortes
   o bastante. Requer revisão manual ou mais regras de classificação.
-- **Falta o 47º exame** (2026, o mais recente — ID do portal: 18197), ainda não extraído.
 - **Links do 37º e 38º exame em `PDF_LINKS` continuam mortos** (`cdn.oab.org.br`) — esses dois
   exames não fazem parte do banco de questões (não têm ID no portal salvo, `id: 0`), só
   aparecem na lista de downloads históricos da página Download. Fora do escopo desta correção.
@@ -245,12 +256,10 @@ melhor qualidade de extração para estes PDFs específicos.
 1. **Revisar as ~69 questões "Sem Classificação"**: rodar `classificador.py` com
    mais regras, ou classificar manualmente.
 
-2. **Adicionar questões do 47º exame** (2026, mais recente — ID 18197 no portal).
-
-3. **Adicionar comentários**: preencher `comentario` com explicações das
+2. **Adicionar comentários**: preencher `comentario` com explicações das
    respostas corretas.
 
-4. **Modo simulado**: permitir filtro por "questões nunca respondidas"
+3. **Modo simulado**: permitir filtro por "questões nunca respondidas"
    para simular prova real.
 
 ### Comandos Úteis
