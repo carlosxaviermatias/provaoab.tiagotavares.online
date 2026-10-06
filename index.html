@@ -19,6 +19,7 @@
         <button class="nav-btn" data-pagina="estatisticas" onclick="navegar('estatisticas')">Estatísticas</button>
         <button class="nav-btn" data-pagina="comentarios" onclick="navegar('comentarios')">Comentários</button>
         <button class="nav-btn" data-pagina="download" onclick="navegar('download')">Download</button>
+        <button class="nav-btn" data-pagina="ps" onclick="navegar('ps')">Processo Seletivo</button>
       </nav>
       <div class="cronometro-badge" title="Tempo de estudo">
         <span class="cronometro-icon">&#9201;</span>
@@ -145,6 +146,55 @@
         </div>
         <div class="download-grid" id="download-lista"></div>
       </section>
+
+      <!-- PROCESSO SELETIVO (estágio - Vara Federal de Três Rios) -->
+      <section id="pagina-ps" class="pagina">
+        <div class="page-header">
+          <h2>Processo Seletivo — Estágio na Justiça Federal</h2>
+          <p class="subtitulo">Vara Federal de Três Rios/RJ · Edital SJRJ nº 47/2026 · Direito Civil, Processo Civil, Direito Previdenciário e Juizados Especiais Federais.</p>
+        </div>
+
+        <div class="ps-tabs">
+          <button class="ps-tab-btn ativo" data-aba="geral" onclick="psAba('geral')">Visão geral</button>
+          <button class="ps-tab-btn" data-aba="questoes" onclick="psAba('questoes')">Questões</button>
+          <button class="ps-tab-btn" data-aba="entrevista" onclick="psAba('entrevista')">Roteiro de entrevista</button>
+          <button class="ps-tab-btn" data-aba="provas" onclick="psAba('provas')">Provas antigas</button>
+        </div>
+
+        <div id="ps-aba-geral" class="ps-aba ativa">
+          <div id="ps-geral"></div>
+        </div>
+
+        <div id="ps-aba-questoes" class="ps-aba">
+          <div class="filtros ps-filtros">
+            <select id="ps-filtro-materia" onchange="PS.carregarQuestoes()">
+              <option value="">Todas as matérias</option>
+            </select>
+            <select id="ps-filtro-status" onchange="PS.carregarQuestoes()">
+              <option value="">Todos os status</option>
+              <option value="nao-respondida">Não respondidas</option>
+              <option value="correta">Acertadas</option>
+              <option value="errada">Erradas</option>
+            </select>
+            <button class="btn-secondary" onclick="PS.refazer()">Refazer do zero</button>
+            <span id="ps-contador" class="ps-contador"></span>
+          </div>
+          <div id="ps-questoes" class="questoes-lista"></div>
+          <div id="ps-paginacao" class="paginacao"></div>
+        </div>
+
+        <div id="ps-aba-entrevista" class="ps-aba">
+          <p class="ps-obs">A entrevista é oral e presencial (05/11/2026). Tente responder em voz alta, em até 2 minutos, antes de abrir a resposta-modelo.</p>
+          <div id="ps-entrevista"></div>
+        </div>
+
+        <div id="ps-aba-provas" class="ps-aba">
+          <p class="ps-obs">Provas de estágio em Direito aplicadas pela Justiça Federal em outras Subseções (documentos públicos, abertos no site de cada órgão). O Edital 47/2026 não prevê prova escrita; use-as para conhecer os temas e o estilo das bancas.</p>
+          <div class="download-grid" id="ps-provas"></div>
+          <h3 class="ps-titulo">Links úteis</h3>
+          <ul class="ps-links" id="ps-links"></ul>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -157,6 +207,8 @@
   <script src="js/dados.js"></script>
   <script src="js/comentarios.js"></script>
   <script src="js/timer.js"></script>
+  <script src="js/ps_dados.js"></script>
+  <script src="js/ps.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -175,6 +175,23 @@ ar (DNS não resolve mais) — foram corrigidos em 2026-07-10 para o CDN atual
 | 46º | 17734 |
 | 47º | 18197 (ainda não extraído, exame mais recente) |
 
+## Seção "Processo Seletivo" (estágio na Vara Federal de Três Rios — Edital SJRJ 47/2026)
+
+Aba separada do banco da OAB (menu "Processo Seletivo"). A seleção do edital é **CR ≥ 8,0 + entrevista oral**
+(entrevista em 05/11/2026) sobre **Direito Civil, Processo Civil, Direito Previdenciário e Juizados Especiais Federais**.
+
+| Arquivo | Conteúdo |
+|---|---|
+| `js/ps_dados.js` | 60 questões originais (15 por matéria, ids 9001–9060, com comentário e base legal/súmula), 16 perguntas de entrevista com resposta-modelo, resumo do edital e lista de provas antigas. Alternativas embaralhadas de forma determinística (semente = id). |
+| `js/ps.js` | Lógica da aba (visão geral, questões com filtros, roteiro de entrevista, provas antigas). Progresso em `localStorage` na chave `oab_ps_respostas` (separada das estatísticas da OAB). |
+| `processo-seletivo/Edital_47_SJRJ_2026.pdf` | Cópia do edital, linkada na aba. |
+
+- As questões **não** copiam provas antigas: são originais, escritas sobre os temas que aparecem nelas
+  (SJBA/Vitória da Conquista 2016, TRF6/Juiz de Fora 2024, SJPA/Tucuruí 2020, JF 5ª Região/Caruaru). Os PDFs
+  originais ficam só como links na aba "Provas antigas".
+- Para acrescentar questão: novo objeto em `questoesPS` (4 alternativas, `correta` = índice 0-3, `comentario`).
+- ⚠️ O conteúdo cita lei e súmulas — conferir a legislação atualizada se algo mudar (ex.: EC 103/2019, Lei 13.846/2019).
+
 ## Pendências / Problemas Conhecidos
 
 ### Corrigido em 2026-07-09 e 2026-07-10

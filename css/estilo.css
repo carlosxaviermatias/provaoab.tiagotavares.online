@@ -761,3 +761,146 @@ footer {
     padding: 16px;
   }
 }
+
+/* ===== Processo Seletivo (estágio - Vara Federal de Três Rios) ===== */
+.ps-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--border);
+}
+
+.ps-tab-btn {
+  background: transparent;
+  color: var(--text-light);
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.ps-tab-btn:hover { color: var(--primary); }
+
+.ps-tab-btn.ativo {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.ps-aba { display: none; }
+.ps-aba.ativa { display: block; }
+
+.ps-destaque {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: #fff;
+  padding: 22px 24px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+
+.ps-destaque h3 { font-size: 20px; margin-bottom: 4px; }
+.ps-destaque p { opacity: 0.9; font-size: 14px; }
+.ps-destaque .ps-contagem { margin-top: 8px; font-size: 16px; opacity: 1; }
+.ps-destaque .btn-download { background: #fff; color: var(--primary-dark); padding: 10px 18px; border-radius: 6px; text-decoration: none; font-weight: 600; white-space: nowrap; }
+
+.ps-aviso {
+  background: #fef9e7;
+  border-left: 4px solid var(--accent);
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  font-size: 14.5px;
+}
+
+.ps-titulo { margin: 26px 0 12px; color: var(--primary-dark); }
+
+.ps-materias { margin-bottom: 8px; }
+
+.ps-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  font-size: 14.5px;
+}
+
+.ps-tabela th, .ps-tabela td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.ps-tabela th { width: 30%; color: var(--primary-dark); background: #f6f9fc; }
+.ps-tabela tr:last-child th, .ps-tabela tr:last-child td { border-bottom: none; }
+
+.ps-plano { padding-left: 22px; line-height: 1.7; }
+.ps-plano li { margin-bottom: 6px; }
+
+.ps-obs { color: var(--text-light); font-size: 14px; margin: 12px 0 18px; }
+
+.ps-filtros { margin-bottom: 18px; align-items: center; }
+.ps-contador { color: var(--text-light); font-size: 14px; margin-left: auto; }
+
+.ps-entrevista-item {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.ps-entrevista-item summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+}
+
+.ps-entrevista-item summary::-webkit-details-marker { display: none; }
+.ps-entrevista-item[open] summary { border-bottom: 1px solid var(--border); background: #f6f9fc; }
+
+.ps-num {
+  flex: 0 0 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.ps-pergunta { flex: 1; }
+
+.ps-resposta { padding: 16px 20px 18px; font-size: 15px; }
+.ps-resposta p + p { margin-top: 10px; }
+.ps-dica { color: var(--primary-dark); background: #eaf4fb; padding: 10px 14px; border-radius: 6px; }
+
+.ps-detalhe { font-size: 14px; color: var(--text-light); margin-top: 6px; }
+
+.ps-links { padding-left: 22px; line-height: 1.9; }
+.ps-links a { color: var(--primary-light); }
+
+@media (max-width: 768px) {
+  .ps-tab-btn { padding: 8px 10px; font-size: 13px; }
+  .ps-contador { margin-left: 0; }
+  .ps-entrevista-item summary { flex-wrap: wrap; }
+  .ps-tabela th { width: 38%; }
+}
