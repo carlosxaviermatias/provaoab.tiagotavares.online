@@ -16,6 +16,7 @@
       <nav>
         <button class="nav-btn ativo" data-pagina="home" onclick="navegar('home')">Início</button>
         <button class="nav-btn" data-pagina="questoes" onclick="navegar('questoes')">Questões</button>
+        <button class="nav-btn" data-pagina="simulado" onclick="navegar('simulado')">Simulado</button>
         <button class="nav-btn" data-pagina="estatisticas" onclick="navegar('estatisticas')">Estatísticas</button>
         <button class="nav-btn" data-pagina="comentarios" onclick="navegar('comentarios')">Comentários</button>
         <button class="nav-btn" data-pagina="download" onclick="navegar('download')">Download</button>
@@ -113,6 +114,15 @@
         <div id="questoes-container" class="questoes-lista"></div>
 
         <div id="paginacao" class="paginacao"></div>
+      </section>
+
+      <!-- SIMULADO -->
+      <section id="pagina-simulado" class="pagina">
+        <div class="page-header">
+          <h2>Simulado</h2>
+          <p class="subtitulo">40 quest&otilde;es sorteadas das provas reais, em 5 horas, na propor&ccedil;&atilde;o de mat&eacute;rias do exame.</p>
+        </div>
+        <div id="sim-conteudo"></div>
       </section>
 
       <!-- ESTATISTICAS -->
@@ -256,12 +266,14 @@
   </footer>
 
   <script src="js/dados.js"></script>
+  <script src="js/riscar.js"></script>
   <script src="js/comentarios.js"></script>
   <script src="js/timer.js"></script>
   <script src="js/ps_dados.js"></script>
   <script src="js/ps.js"></script>
   <script src="js/sebrae_dados.js"></script>
   <script src="js/sebrae.js"></script>
+  <script src="js/simulado.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

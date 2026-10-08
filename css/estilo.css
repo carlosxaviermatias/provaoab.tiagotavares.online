@@ -1021,3 +1021,116 @@ footer {
   .sb-tab-btn { padding: 8px 10px; font-size: 13px; }
   .sb-card { padding: 14px 16px; }
 }
+
+/* ---- Riscar alternativas ---- */
+.alternativa { display: flex; gap: 8px; align-items: flex-start; }
+
+.alt-letra {
+  flex: 0 0 auto;
+  font-weight: 700;
+  color: var(--primary-dark);
+  border-radius: 4px;
+  padding: 0 4px;
+  margin: -2px 0 -2px -2px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.alt-letra:hover { background: #e6edf5; color: var(--error); }
+.alt-letra.estatica { cursor: default; }
+.alt-letra.estatica:hover { background: none; color: var(--primary-dark); }
+
+.alt-texto { flex: 1; }
+
+.alternativa.riscada .alt-texto {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  opacity: 0.5;
+}
+
+.alternativa.riscada { background: #fafafa; }
+.alternativa.sem-clique { cursor: default; }
+.alternativa.sem-clique:hover { border-color: var(--border); background: inherit; }
+
+/* ---- Simulado ---- */
+.sim-barra {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: var(--primary-dark);
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.sim-relogio-btn {
+  background: rgba(255,255,255,0.12);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.sim-relogio-btn:hover { background: rgba(255,255,255,0.22); }
+
+.sim-relogio {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.sim-relogio.alerta { color: #ffb3a7; }
+.sim-relogio-rotulo { font-size: 11px; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.04em; }
+.sim-progresso { font-size: 14px; opacity: 0.95; }
+.sim-acoes { margin-left: auto; display: flex; gap: 8px; }
+.sim-acoes .btn-download { padding: 8px 16px; }
+
+.sim-cartao {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.sim-bolha {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+.sim-bolha:hover { border-color: var(--primary-light); }
+
+.sim-bolha.ok {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+.sim-rodape {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 24px 0 8px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .sim-acoes { margin-left: 0; width: 100%; }
+  .sim-acoes button { flex: 1; }
+  .sim-bolha { width: 30px; height: 30px; font-size: 12px; }
+}

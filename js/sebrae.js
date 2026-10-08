@@ -214,7 +214,10 @@ const SB = {
       return titulo + this.htmlQuestao(q);
     }).join('');
     const r = this.getRespostas();
-    lote.forEach(q => { if (r[q.id] !== undefined) this.exibirGabarito(q, r[q.id]); });
+    lote.forEach(q => {
+      if (r[q.id] !== undefined) this.exibirGabarito(q, r[q.id]);
+      Risco.aplicar('sb', q.id, 'sb-');
+    });
 
     let html = '';
     for (let i = 1; i <= paginas; i++) {
@@ -224,7 +227,6 @@ const SB = {
   },
 
   htmlQuestao(q) {
-    const letras = ['A', 'B', 'C', 'D', 'E'];
     return `
       <div class="questao-card" id="sb-questao-${q.id}">
         <div class="questao-meta">
@@ -236,7 +238,7 @@ const SB = {
         <div class="alternativas" id="sb-alternativas-${q.id}">
           ${q.alternativas.map((alt, i) => `
             <div class="alternativa" id="sb-alt-${q.id}-${i}" onclick="SB.responder(${q.id}, ${i})">
-              <strong>${letras[i]})</strong> ${this.esc(alt)}
+              ${Risco.letra('sb', q.id, i, 'sb-')}<span class="alt-texto">${this.esc(alt)}</span>
             </div>`).join('')}
         </div>
         <div id="sb-gabarito-${q.id}" class="gabarito-box" style="display:none;"></div>

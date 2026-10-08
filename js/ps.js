@@ -190,7 +190,10 @@ const PS = {
       return titulo + this.htmlQuestao(q);
     }).join('');
     const r = this.getRespostas();
-    lote.forEach(q => { if (r[q.id] !== undefined) this.exibirGabarito(q, r[q.id]); });
+    lote.forEach(q => {
+      if (r[q.id] !== undefined) this.exibirGabarito(q, r[q.id]);
+      Risco.aplicar('ps', q.id, 'ps-');
+    });
 
     let html = '';
     for (let i = 1; i <= total; i++) {
@@ -200,7 +203,6 @@ const PS = {
   },
 
   htmlQuestao(q) {
-    const letras = ['A', 'B', 'C', 'D', 'E'];
     return `
       <div class="questao-card" id="ps-questao-${q.id}">
         <div class="questao-meta">
@@ -212,7 +214,7 @@ const PS = {
         <div class="alternativas" id="ps-alternativas-${q.id}">
           ${q.alternativas.map((alt, i) => `
             <div class="alternativa" id="ps-alt-${q.id}-${i}" onclick="PS.responder(${q.id}, ${i})">
-              <strong>${letras[i]})</strong> ${this.esc(alt)}
+              ${Risco.letra('ps', q.id, i, 'ps-')}<span class="alt-texto">${this.esc(alt)}</span>
             </div>`).join('')}
         </div>
         <div id="ps-gabarito-${q.id}" class="gabarito-box" style="display:none;"></div>

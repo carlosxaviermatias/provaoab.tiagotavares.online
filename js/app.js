@@ -76,6 +76,7 @@ const App = {
     if (pagina === 'estatisticas') this.carregarEstatisticas();
     if (pagina === 'comentarios') this.carregarComentarios();
     if (pagina === 'download') this.carregarDownloads();
+    if (pagina === 'simulado') Simulado.abrir();
     if (pagina === 'ps') PS.abrir();
     if (pagina === 'sebrae') SB.abrir();
 
@@ -271,6 +272,7 @@ const App = {
       if (resposta !== undefined) {
         this.exibirGabarito(q, resposta);
       }
+      Risco.aplicar('oab', q.id, '');
     });
 
     if (totalPaginas > 1) {
@@ -296,7 +298,7 @@ const App = {
         <div class="alternativas" id="alternativas-${q.id}">
           ${q.alternativas.map((alt, idx) => `
             <div class="alternativa" id="alt-${q.id}-${idx}" onclick="App.selecionarAlternativa(${q.id}, ${idx})">
-              ${alt}
+              ${Risco.letra('oab', q.id, idx, '')}<span class="alt-texto">${alt}</span>
             </div>
           `).join('')}
         </div>
@@ -451,12 +453,7 @@ const App = {
   },
 
   iniciarModoProva() {
-    this.navegar('questoes');
-    document.getElementById('filtro-disciplina').value = '';
-    document.getElementById('filtro-exame').value = '';
-    document.getElementById('filtro-ano').value = '';
-    document.getElementById('filtro-status').value = 'nao-respondida';
-    this.carregarQuestoes();
+    this.navegar('simulado');
   }
 };
 
