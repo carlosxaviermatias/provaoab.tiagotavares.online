@@ -195,6 +195,14 @@ ar (DNS não resolve mais) — foram corrigidos em 2026-07-10 para o CDN atual
 | 46º | 17734 |
 | 47º | 18197 (extraído em 05/10/2026, ver abaixo) |
 
+## Cache dos arquivos (publicação)
+
+O GitHub Pages serve CSS e JS com cache de alguns minutos, então uma mudança podia não aparecer para quem já tinha
+visitado o site. Por isso o `index.html` carrega os arquivos com um sufixo de versão: `js/app.js?v=20261008`.
+
+**A cada publicação que mexer em JS ou CSS, troque o número de versão** (a data serve bem) em todas as tags
+`<script>` e no `<link>` do CSS. Sem isso, o usuário pode continuar vendo a versão antiga até o cache expirar.
+
 ## Riscar alternativas (`js/riscar.js`)
 
 Clicar na **letra** da alternativa (A, B, C, D) corta o texto, como se faz no papel; clicar no texto responde
