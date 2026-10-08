@@ -11,11 +11,30 @@ Permite filtrar questões por disciplina, exame, ano e status, com download das 
 oab-estudos/
 ├── index.html          # Página principal do site
 ├── js/
-│   ├── dados.js         # Banco de questões (formato JavaScript)
+│   ├── dados.js         # Banco de questões da OAB (formato JavaScript)
 │   ├── app.js           # Lógica de filtros, exibição e gabarito
-│   └── comentarios.js   # Anotações do usuário (localStorage)
+│   ├── comentarios.js   # Anotações do usuário (localStorage)
+│   ├── timer.js         # Cronômetro de estudo, por disciplina
+│   ├── riscar.js        # Riscar alternativas (compartilhado por todos os bancos)
+│   ├── simulado.js      # Simulado da 1ª fase: 40 questões em 5 horas
+│   ├── ps_dados.js      # Banco do Processo Seletivo (Vara Federal de Três Rios)
+│   ├── ps.js            # Lógica da aba Processo Seletivo
+│   ├── sebrae_dados.js  # Banco do Processo Seletivo SEBRAE/RJ ALI 02/2026
+│   └── sebrae.js        # Lógica da aba SEBRAE
 ├── DOCUMENTACAO.md     # Este arquivo
 ```
+
+### Chaves de localStorage
+
+| Chave | Conteúdo |
+|---|---|
+| `oab_estudos_respostas` | Respostas do banco da OAB |
+| `oab_estudos_tempo` | Cronômetro de estudo (total e por disciplina) |
+| `oab_ps_respostas` | Respostas do banco do Processo Seletivo |
+| `oab_sebrae_respostas` | Respostas do banco SEBRAE |
+| `oab_alternativas_riscadas` | Alternativas riscadas, por banco (`oab:`, `ps:`, `sb:`, `sim:`) |
+| `oab_simulado_atual` | Simulado em andamento ou o último finalizado |
+| `oab_simulado_historico` | Últimos 20 resultados de simulado |
 
 ## Banco de Questões (dados.js)
 
@@ -176,6 +195,32 @@ ar (DNS não resolve mais) — foram corrigidos em 2026-07-10 para o CDN atual
 | 46º | 17734 |
 | 47º | 18197 (extraído em 05/10/2026, ver abaixo) |
 
+## Riscar alternativas (`js/riscar.js`)
+
+Clicar na **letra** da alternativa (A, B, C, D) corta o texto, como se faz no papel; clicar no texto responde
+normalmente. O clique na letra usa `stopPropagation`, por isso não dispara a resposta.
+
+- Estado em `localStorage`, chave `oab_alternativas_riscadas`, no formato `{"oab:123": [1,3]}`.
+- O prefixo (`oab`, `ps`, `sb`, `sim`) separa os bancos, que têm faixas de id próprias.
+- Para usar em um banco novo: renderizar `Risco.letra(banco, id, idx, prefixoDosIds)` no início da alternativa,
+  envolver o texto em `<span class="alt-texto">` e chamar `Risco.aplicar(banco, id, prefixo)` após renderizar a lista.
+
+## Simulado da 1ª fase (`js/simulado.js`)
+
+Aba "Simulado": 40 questões sorteadas do banco, em até 5 horas.
+
+- **Sorteio:** só entram questões com gabarito (`correta !== null`) e com disciplina preenchida — hoje 645 das 720.
+  A cota por disciplina sai da proporção dessas questões no banco, pelo método do maior resto, somando exatamente 40.
+  Conforme as questões sem classificação forem recebendo disciplina, a distribuição se ajusta sozinha.
+- **Ordem:** blocos na sequência típica da FGV (constante `ORDEM`), com sorteio aleatório dentro de cada disciplina.
+- **Relógio:** conta por *timestamp* (`inicio` + `duracao`), não por ticks, então continua correto se a aba ficar em
+  segundo plano ou a página for recarregada. Começa regressivo em 05:00:00 e alterna para tempo decorrido ao clique.
+  Aos 10 minutos finais fica em vermelho; no fim do tempo, encerra sozinho e mostra o resultado.
+- **Durante a prova:** nenhum gabarito aparece; há cartão de respostas numerado para navegar entre as questões.
+- **Resultado:** acertos, erros, em branco, aproveitamento, desempenho por disciplina e revisão com gabarito e
+  comentário de cada questão. Nota de corte considerada: 50% (20 de 40).
+- As respostas do simulado ficam em chave própria e **não** entram nas estatísticas da aba Questões.
+
 ## Seção "Processo Seletivo" (estágio na Vara Federal de Três Rios — Edital SJRJ 47/2026)
 
 Aba separada do banco da OAB (menu "Processo Seletivo"). A seleção do edital é **CR ≥ 8,0 + entrevista oral**
@@ -203,6 +248,20 @@ Fonte: PDFs da FGV (`oab.fgv.br/arq/650/...`): provas Tipos 1 a 4 + gabarito def
   (duplicata; nº 48/49/50 nos Tipos 2/3/4) → `correta: null`.
 - Disciplinas atribuídas à mão, por conteúdo (blocos da FGV: Ética 1-8, Filosofia 9-10, Constitucional 11-16, … Trabalho 71-75,
   Proc. do Trabalho 76-80). Não há comentários nas questões do 47º ainda.
+
+## Seção "SEBRAE" (Processo Seletivo SEBRAE/RJ – ALI 02/2026)
+
+Aba do menu "SEBRAE", para a vaga de Agente na metodologia **Educação Empreendedora**. A seleção tem prova objetiva
+de 50 questões (15 de Língua Portuguesa, 15 de Conhecimentos ALI e 20 da metodologia), análise documental e
+entrevista por competências (100 pontos, maior peso do processo).
+
+| Arquivo | Conteúdo |
+|---|---|
+| `js/sebrae_dados.js` | `SB_EDITAL` (dados do processo), `SB_RESUMOS` (16 fichas de resumo com destaques em `<b class="hl">`), `questoesSebrae` (50 questões originais, ids 9501–9550, na proporção da prova), `SB_ENTREVISTA_GUIA`, `entrevistaSebrae` (18 perguntas por competência) e `SB_LINKS`. |
+| `js/sebrae.js` | Lógica da aba: visão geral, resumo, questões e entrevista. Progresso em `oab_sebrae_respostas`. |
+
+- Os resumos são renderizados como HTML (conteúdo próprio do site); as questões passam por `esc()`.
+- ⚠️ Conteúdo sujeito a mudança legislativa: teto do MEI, carga horária do Novo Ensino Médio (Lei 14.945/2024).
 
 ## Pendências / Problemas Conhecidos
 
